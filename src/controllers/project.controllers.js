@@ -1,7 +1,5 @@
 // controllers/project.controllers.js
 
-
-
 import Project from "../models/project.model.js";
 
 // Controller to fetch all projects
@@ -98,7 +96,7 @@ export const updateProject = async (req, res) => {
 
     res.status(200).json({
       message: "Project updated successfully.",
-      project,
+      project
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });

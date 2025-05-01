@@ -2,7 +2,7 @@ import mongoose from  "mongoose";
 
 const taskSchema = mongoose.Schema({
 
-    taskTitle : {
+    title : {
         type : String,
         required : true,
         
@@ -23,7 +23,7 @@ const taskSchema = mongoose.Schema({
         enum : ["active" , "completed" ,"archived"],
         default : "active",
     },
-    deadLine : {
+    deadline : {
         type : Date,
     },
     priority : {
