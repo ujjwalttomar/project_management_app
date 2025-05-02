@@ -1,14 +1,18 @@
+// src/models/team.models.js
+
 import mongoose from "mongoose";
 
 const teamSchema = mongoose.Schema({
 
-    teamName : {
+    name : {
         type : String,
         required : true, 
         unique : true,
 
     },
-    
+    description : {
+      type : string,
+    },
     members : [
        {
         user : {
