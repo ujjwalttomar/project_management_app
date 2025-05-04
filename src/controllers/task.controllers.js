@@ -40,7 +40,7 @@ export const createTask = async (req ,res) => {
       priority,
       deadline,
       status
-    });
+    });}
     res.status(201).json({message : "task created successfully.", newTask});
   }catch(error){
     res.status(500).json({message : "server error", error : error.message});
