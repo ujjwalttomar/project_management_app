@@ -11,7 +11,7 @@ export const createTeam = async (req, res) => {
       description,
       createdBy : req.user._id
     });
-   await newTeam.save();
+   
    res.status(201).json({
      message : "team created successfully!",
      newTeam
@@ -46,7 +46,7 @@ export const updateTeam = async (req, res) => {
 export const deleteTeam = async (req, res) => {
   try{
     const teamId = req.params.teamId;
-    const team = await Team.findById(teamId);
+    const team = await Team.findById(teamId).populate("members.user", "name email");
     if(!team){
       return res.status(404).json({
         message : "team not found."
@@ -64,10 +64,11 @@ export const deleteTeam = async (req, res) => {
 
 export const getAllTeams = async (req, res) => {
   try{
-    const teams = await Team.find();
+    const teams = await Team.find().populate("members.user", "name email");
     if(teams.length == 0){
-      return res.status(404).json({
-        message : "teams not found."
+      return res.status(200).json({
+      message: "Teams fetched successfully.",
+      teams
       });
     }
     res.status(200).json({
@@ -117,7 +118,11 @@ export const addMembersToTeam = async (req, res) => {
         message : "user not found."
       });
     }
-    await team.members.push({user : user._id , role : "user"});
+    const alreadyMember = team.members.some(m => m.user.toString() === userId);
+    if (alreadyMember) {
+       return res.status(400).json({ message: "User is already a member of the team." });
+}
+     team.members.push({user : user._id , role : "user"});
     await team.save();
 
     res.status(200).json({
@@ -148,7 +153,8 @@ export const removeMembersFromTeam = async (req, res) => {
         message : "user not found."
       });
     }
-    await team.members.deleteOne(user);
+    team.members = team.members.filter(member => member.user.toString() !== userId);
+
     await team.save();
 
     res.status(200).json({
@@ -171,25 +177,23 @@ export const changeTeamLeader = async (req, res) => {
       return res.status(404).json({ message: "Team not found" });
     }
 
-    const member = team.members.find(m => m.user.toString() === userId);
-
+    const member =  team.members.find(m => m.user.toString() === userId);
+    const teamLeader = team.members.find(m => m.role === "teamLeader");
     if (!member) {
-      return res.status(404).json({ message: "User not in this team" });
-      }
-      
-    if(requestingUser.role === "admin" || requestingUser.role === "teamLeader"){
-      user.role = "teamLeader";
-      await user.save();
-      res.status(200).json({
-        message : "user role updated successfully.",
-        user
-      });
-    }else{
-      return res.status(500).json({
-        message : "only admin or teamLeader can promote a member."
-      });
+      return res.status(404).json({ message: "member not found." });
     }
+    if (!teamLeader){
+      member.role = "teamLeader";
+    }
+    else{
+      member.role = "teamLeader";
+      teamLeader.role = "user";
+    }
+    await team.save();
     
+    res.status(200).json({
+      message : "team leader changed successfully."
+    });
   }catch(error){
     res.status(500).json({message : "server error", error : error.message});
   }
