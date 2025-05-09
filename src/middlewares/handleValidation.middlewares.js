@@ -1,4 +1,6 @@
-// middlewares/handleValidation.js
+//   src/middlewares/handleValidation.middlewares.js
+
+
 import { validationResult } from "express-validator";
 
 export const handleValidation = (req, res, next) => {

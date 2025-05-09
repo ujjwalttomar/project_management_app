@@ -1,3 +1,5 @@
+//  src/routes/auth.routes.js
+
 import express from "express";
 import {
   registerUser,
@@ -14,7 +16,7 @@ import {
 
 const router = express.Router();
 
-// Auth routes
+
 router.post("/register", validateRegister, registerUser);
 router.post("/login", validateLogin, loginUser);
 router.post("/forgot-password", validateEmail, forgotPassword);

@@ -1,4 +1,4 @@
-// utils/sendToken.js
+//  src/utils/sendToken.js
 import jwt from "jsonwebtoken";
 
 const createToken = (userId) => {

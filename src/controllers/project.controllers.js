@@ -1,8 +1,9 @@
-// controllers/project.controllers.js
+// src/controllers/project.controllers.js
+
 
 import Project from "../models/project.model.js";
 
-// Controller to fetch all projects
+
 export const getAllProjects = async (req, res) => {
   try {
     const projects = await Project.find();
@@ -12,7 +13,7 @@ export const getAllProjects = async (req, res) => {
   }
 };
 
-// Controller to create a project
+
 export const createProject = async (req, res) => {
   try {
     const { projectName, deadline, description } = req.body;
@@ -43,7 +44,7 @@ export const createProject = async (req, res) => {
   }
 };
 
-// Controller to fetch a project by its ID
+
 export const getProjectById = async (req, res) => {
   try {
     const projectId = req.params.projectId;
@@ -59,7 +60,7 @@ export const getProjectById = async (req, res) => {
   }
 };
 
-// Controller to delete a project
+
 export const deleteProject = async (req, res) => {
   try {
     const projectId = req.params.projectId; 
@@ -76,7 +77,7 @@ export const deleteProject = async (req, res) => {
   }
 };
 
-// Controller for updating a project
+
 export const updateProject = async (req, res) => {
   try {
     const projectId = req.params.projectId; 

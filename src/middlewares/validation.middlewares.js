@@ -1,4 +1,6 @@
-// middlewares/validation.middlewares.js
+//  src/middlewares/validation.middlewares.js
+
+
 import { body } from "express-validator";
 
 export const validateRegister = [

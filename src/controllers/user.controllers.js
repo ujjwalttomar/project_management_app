@@ -1,4 +1,4 @@
-// contollers/user.controllers.js
+// src/contollers/user.controllers.js
 
 import User from "../models/user.model.js";
 

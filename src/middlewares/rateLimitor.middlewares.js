@@ -1,3 +1,6 @@
+//  src/middlewares/rateLimitor.middlewares.js
+
+
 import rateLimit from "express-rate-limit";
 
 export const forgotPasswordLimiter = rateLimit({
